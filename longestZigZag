@@ -1,0 +1,61 @@
+/******************************************************************************
+                                                                             
+ TopCoder Collegiate Challenge Semifinal Round 3 - Division I, Level One     
+                                                                             
+ Problem:                                                                    
+   https://community.topcoder.com/stat?c=problem_statement&pm=1259&rd=4493   
+                                                                               
+*******************************************************************************/
+
+#include <assert.h>
+
+int longestZigZag(int *sequence,int n)
+{
+  assert(sequence && n>0);
+	
+	if (n==1)
+	{
+		return 1;
+	}
+	
+	int *zigzag=new int[n];
+	int *flag=new int[n];
+	int start;
+
+	for (start=1;start<n && sequence[start]==sequence[0];start++);
+
+	if (sequence[start]>sequence[0])
+	{
+		flag[start]=1;
+	}
+	else
+	{
+		flag[start]=-1;
+	}
+
+	for (int i=start;i<n;++i)
+	{
+		zigzag[i]=2;
+
+		for (int j=start;j<i;++j)
+		{
+			if (flag[j]*(sequence[i]-sequence[j]) < 0)
+			{
+				flag[i]=-flag[j];
+				zigzag[i]=zigzag[j]+1>zigzag[i]?zigzag[j]+1:zigzag[i];
+			}
+			else
+			{
+				zigzag[i]=zigzag[j]>zigzag[i]?zigzag[j]:zigzag[i];
+			}
+		}
+		
+	}
+
+	int res=zigzag[n-1];
+
+	delete []zigzag;
+	delete []flag;
+
+	return res;
+}
