@@ -1,4 +1,4 @@
-DayDauUp
+DayDayUp
 ========
 
 Algorithm Learning
